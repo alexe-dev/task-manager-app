@@ -4,7 +4,7 @@
  */
 
 
-
+import type { Context } from "./src/context"
 
 
 
@@ -28,7 +28,22 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Project: { // root type
+    id?: number | null; // Int
+    stages?: Array<NexusGenRootTypes['Stage'] | null> | null; // [Stage]
+    title?: string | null; // String
+  }
   Query: {};
+  Stage: { // root type
+    id?: number | null; // Int
+    tasks?: Array<NexusGenRootTypes['Task'] | null> | null; // [Task]
+    title?: string | null; // String
+  }
+  Task: { // root type
+    id?: number | null; // Int
+    isCompleted?: boolean | null; // Boolean
+    title?: string | null; // String
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -42,14 +57,44 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Project: { // field return type
+    id: number | null; // Int
+    stages: Array<NexusGenRootTypes['Stage'] | null> | null; // [Stage]
+    title: string | null; // String
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    projects: Array<NexusGenRootTypes['Project'] | null> | null; // [Project]
+  }
+  Stage: { // field return type
+    id: number | null; // Int
+    tasks: Array<NexusGenRootTypes['Task'] | null> | null; // [Task]
+    title: string | null; // String
+  }
+  Task: { // field return type
+    id: number | null; // Int
+    isCompleted: boolean | null; // Boolean
+    title: string | null; // String
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Project: { // field return type name
+    id: 'Int'
+    stages: 'Stage'
+    title: 'String'
+  }
   Query: { // field return type name
-    ok: 'Boolean'
+    projects: 'Project'
+  }
+  Stage: { // field return type name
+    id: 'Int'
+    tasks: 'Task'
+    title: 'String'
+  }
+  Task: { // field return type name
+    id: 'Int'
+    isCompleted: 'Boolean'
+    title: 'String'
   }
 }
 
@@ -87,7 +132,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: any;
+  context: Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;
