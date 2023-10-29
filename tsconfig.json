@@ -5,8 +5,11 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "ES2017"
+    "target": "ES2017",
+    "allowSyntheticDefaultImports": true
   },
+
+  "exclude": ["node_modules", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"
