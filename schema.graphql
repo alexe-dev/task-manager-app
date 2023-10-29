@@ -2,24 +2,37 @@
 ### Do not make changes to this file directly
 
 
+type Mutation {
+  createProject(title: String!): Project!
+  createStage(projectId: ID!, title: String!): Stage!
+  createTask(projectId: ID!, stageId: ID!, title: String!): Task!
+  deleteProject(projectId: ID!): String!
+  deleteStage(projectId: ID!, stageId: ID!): String!
+  deleteTask(projectId: ID!, stageId: ID!, taskId: ID!): String!
+  toggleTask(projectId: ID!, stageId: ID!, taskId: ID!): Task!
+}
+
 type Project {
-  id: Int
+  id: ID
   stages: [Stage]
   title: String
 }
 
 type Query {
-  projects: [Project]
+  getProjectById(projectId: ID!): Project
+  getProjects: [Project]
 }
 
 type Stage {
-  id: Int
+  id: ID
+  order: Int
   tasks: [Task]
   title: String
 }
 
 type Task {
-  id: Int
+  id: ID
   isCompleted: Boolean
+  order: Int
   title: String
 }

@@ -28,20 +28,23 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Mutation: {};
   Project: { // root type
-    id?: number | null; // Int
+    id?: string | null; // ID
     stages?: Array<NexusGenRootTypes['Stage'] | null> | null; // [Stage]
     title?: string | null; // String
   }
   Query: {};
   Stage: { // root type
-    id?: number | null; // Int
+    id?: string | null; // ID
+    order?: number | null; // Int
     tasks?: Array<NexusGenRootTypes['Task'] | null> | null; // [Task]
     title?: string | null; // String
   }
   Task: { // root type
-    id?: number | null; // Int
+    id?: string | null; // ID
     isCompleted?: boolean | null; // Boolean
+    order?: number | null; // Int
     title?: string | null; // String
   }
 }
@@ -57,48 +60,108 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Mutation: { // field return type
+    createProject: NexusGenRootTypes['Project']; // Project!
+    createStage: NexusGenRootTypes['Stage']; // Stage!
+    createTask: NexusGenRootTypes['Task']; // Task!
+    deleteProject: string; // String!
+    deleteStage: string; // String!
+    deleteTask: string; // String!
+    toggleTask: NexusGenRootTypes['Task']; // Task!
+  }
   Project: { // field return type
-    id: number | null; // Int
+    id: string | null; // ID
     stages: Array<NexusGenRootTypes['Stage'] | null> | null; // [Stage]
     title: string | null; // String
   }
   Query: { // field return type
-    projects: Array<NexusGenRootTypes['Project'] | null> | null; // [Project]
+    getProjectById: NexusGenRootTypes['Project'] | null; // Project
+    getProjects: Array<NexusGenRootTypes['Project'] | null> | null; // [Project]
   }
   Stage: { // field return type
-    id: number | null; // Int
+    id: string | null; // ID
+    order: number | null; // Int
     tasks: Array<NexusGenRootTypes['Task'] | null> | null; // [Task]
     title: string | null; // String
   }
   Task: { // field return type
-    id: number | null; // Int
+    id: string | null; // ID
     isCompleted: boolean | null; // Boolean
+    order: number | null; // Int
     title: string | null; // String
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Mutation: { // field return type name
+    createProject: 'Project'
+    createStage: 'Stage'
+    createTask: 'Task'
+    deleteProject: 'String'
+    deleteStage: 'String'
+    deleteTask: 'String'
+    toggleTask: 'Task'
+  }
   Project: { // field return type name
-    id: 'Int'
+    id: 'ID'
     stages: 'Stage'
     title: 'String'
   }
   Query: { // field return type name
-    projects: 'Project'
+    getProjectById: 'Project'
+    getProjects: 'Project'
   }
   Stage: { // field return type name
-    id: 'Int'
+    id: 'ID'
+    order: 'Int'
     tasks: 'Task'
     title: 'String'
   }
   Task: { // field return type name
-    id: 'Int'
+    id: 'ID'
     isCompleted: 'Boolean'
+    order: 'Int'
     title: 'String'
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createProject: { // args
+      title: string; // String!
+    }
+    createStage: { // args
+      projectId: string; // ID!
+      title: string; // String!
+    }
+    createTask: { // args
+      projectId: string; // ID!
+      stageId: string; // ID!
+      title: string; // String!
+    }
+    deleteProject: { // args
+      projectId: string; // ID!
+    }
+    deleteStage: { // args
+      projectId: string; // ID!
+      stageId: string; // ID!
+    }
+    deleteTask: { // args
+      projectId: string; // ID!
+      stageId: string; // ID!
+      taskId: string; // ID!
+    }
+    toggleTask: { // args
+      projectId: string; // ID!
+      stageId: string; // ID!
+      taskId: string; // ID!
+    }
+  }
+  Query: {
+    getProjectById: { // args
+      projectId: string; // ID!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
